@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+
+  db:
+    image: mongo:5.0.6
+    restart: unless-stopped
+    ports: 
+      - '$MONGO_PORT_EXT:27017'
+    volumes:
+      - './mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh'
+      - 'srvexo-data-db:/data/db'
+    env_file:
+      - dev.example.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_ROOT_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_ROOT_PWD
+      MONGO_INITDB_USER: $MONGO_APP_USER
+      MONGO_INITDB_PASSWORD: $MONGO_APP_PWD
+      MONGO_INITDB_DATABASE: $MONGO_DB_NAME
+
+  db-gui:
+    image: mongo-express:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - '$MONGO_GUI_PORT_EXT:8081'
+    env_file:
+      - dev.example.env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_AUTH_USERNAME: $MONGO_ROOT_USER
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: $MONGO_ROOT_PWD
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+
+volumes:
+  srvexo-data-db:
+
