@@ -6,8 +6,11 @@ services:
     ports:
       - '${APP_PORT_EXT:-3000}:3000'
     environment:
+      APP_ROOT: '${APP_ROOT:-/}'
+      MONGO_APP_USER: $MONGO_APP_USER
       MONGO_APP_PWD: $MONGO_APP_PWD
-      STRAT_URL: $STRAT_URL
+      MONGO_DB_NAME: $MONGO_DB_NAME
+      MONGO_HOST: db
 
   db:
     image: mongo:5.0.6
