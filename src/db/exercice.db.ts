@@ -78,14 +78,19 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
   },
 });
 
-ExerciceEtudiantSchema.set('toObject', {
-  getters: false,
-  virtuals: false,
+// Enlève les propriétés non voulu lorsque l'on transforme en JSON
+ExerciceEtudiantSchema.set('toJSON', {
+  // pour avoir `id`, alias natif de `_id`. virtual = alias
+  virtuals: true,
+  // pour ne pas avoir __v, version du document par Mongoose
   versionKey: false,
+  // true par défaut, mais pour que vous sachiez: convertie les Maps en POJO
   flattenMaps: true,
-  transform: (_doc, ret, _options) => {
-    ret.id = ret._id + ''; // transformer ObjectID en string
+  getters: false,
+  // delete `_id` manuellement
+  transform: (_doc, ret) => {
     delete ret._id;
+    return ret;
   },
 });
 
