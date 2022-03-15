@@ -1,21 +1,67 @@
 {
-  "name": "demo",
-  "version": "0.0.0",
-  "private": true,
+  "name": "service-exercice",
+  "version": "0.1.0",
+  "description": "Service d'exercice du projet LA Web",
+  "keywords": [],
+  "contributors": [
+    { "name": "Simon LEONARD" },
+    { "name": "Clément RICHARDOT" },
+    { "name": "Paul DELIFER" },
+    { "name": "Simon PICHENOT" },
+    { "name": "Romain PAJEAN" },
+    { "name": "Romain NEGRO" }
+  ],
+  "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "mocha"
+    "build": "rimraf ./build && tsc --build tsconfig.prod.json",
+    "start:dev": "nodemon",
+    "start": "npm run build && node -r module-alias/register build/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "prettier-format": "run-script-os",
+    "prettier-format:win32": "prettier --config .prettierrc \"./(src|spec)/**/*.ts\" --write",
+    "prettier-format:darwin:linux": "prettier --config .prettierrc '(src|spec)/**/*.ts' --write",
+    "prettier-format:default": "prettier --config .prettierrc '(src|spec)/**/*.ts' --write",
+    "prettier-watch": "run-script-os",
+    "prettier-watch:win32": "onchange \"(src|spec)/**/*.ts\" -- prettier --write {{changed}}",
+    "prettier-watch:darwin:linux": "onchange '(src|spec)/**/*.ts' -- prettier --write {{changed}}",
+    "prettier-watch:default": "onchange '(src|spec)/**/*.ts' -- prettier --write {{changed}}",
+    "test": "jest",
+    "test:dev": "jest --watchAll",
+    "prepare": "husky install"
   },
-  "dependencies": {
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "http-errors": "~1.6.2",
-    "morgan": "~1.9.0",
-    "pug": "2.0.0-beta11"
+  "_moduleAliases": {
+    "@app": "build/app"
   },
   "devDependencies": {
-    "mocha": "^5.1.1",
-    "supertest": "^3.0.0"
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.2",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.5",
+    "lint-staged": "^12.3.3",
+    "nodemon": "^2.0.15",
+    "onchange": "^7.1.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "run-script-os": "^1.1.6",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "typedoc": "^0.22.11",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "dotenv": "^16.0.0",
+    "module-alias": "^2.2.2"
   }
 }
