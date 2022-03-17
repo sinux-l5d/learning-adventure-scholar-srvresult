@@ -17,6 +17,8 @@ Husky permet de lancer des scripts (voir plus bas) pour lancer les tests unitair
 3. Démarrer l'application en mode developpement : `npm run start:dev`
 4. Démarrer les tests unitaires en mode developpement : `npm run test:dev`
 
+:warning: il faut supprimer le volume pour recommencer une instance de developpement au propre ! `docker-compose -f docker-compose.dev.yml down -v`
+
 ## Scripts
 
 ### `npm run start:dev`

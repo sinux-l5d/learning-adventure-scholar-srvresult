@@ -4,12 +4,24 @@
   "description": "Service d'exercice du projet LA Web",
   "keywords": [],
   "contributors": [
-    { "name": "Simon LEONARD" },
-    { "name": "Clément RICHARDOT" },
-    { "name": "Paul DELIFER" },
-    { "name": "Simon PICHENOT" },
-    { "name": "Romain PAJEAN" },
-    { "name": "Romain NEGRO" }
+    {
+      "name": "Simon LEONARD"
+    },
+    {
+      "name": "Clément RICHARDOT"
+    },
+    {
+      "name": "Paul DELIFER"
+    },
+    {
+      "name": "Simon PICHENOT"
+    },
+    {
+      "name": "Romain PAJEAN"
+    },
+    {
+      "name": "Romain NEGRO"
+    }
   ],
   "main": "index.js",
   "scripts": {
@@ -60,8 +72,9 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "express": "^4.17.2",
     "dotenv": "^16.0.0",
-    "module-alias": "^2.2.2"
+    "express": "^4.17.2",
+    "module-alias": "^2.2.2",
+    "mongoose": "^6.2.6"
   }
 }

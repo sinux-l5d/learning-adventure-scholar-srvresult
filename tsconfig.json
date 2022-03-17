@@ -11,22 +11,18 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "moduleResolution":"Node",
+    "moduleResolution": "Node",
     "types": ["node", "@types/jest"],
-    "typeRoots" : ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
-      "@app": [
-        "src/app"
-      ]
+      "@app": ["src/app"],
+      "@type/*": ["src/type/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "spec/**/*.ts"
-  ],
-  "exclude" : [ ],
+  "include": ["src/**/*.ts", "spec/**/*.ts"],
+  "exclude": [],
   "typedocOptions": {
     "entryPoints": ["src/"],
     "entryPointStrategy": "expand",
