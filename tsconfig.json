@@ -18,7 +18,10 @@
     "baseUrl": "./",
     "paths": {
       "@app": ["src/app"],
-      "@type/*": ["src/type/*"]
+      "@type/*": ["src/type/*"],
+      "@config": ["src/config"],
+      "@services/*": ["src/services/*"],
+      "@repositories/*": ["src/repositories/*"]
     }
   },
   "include": ["src/**/*.ts", "spec/**/*.ts"],

@@ -1,7 +1,7 @@
 {
-  "name": "service-exercice",
+  "name": "service-resultat",
   "version": "0.1.0",
-  "description": "Service d'exercice du projet LA Web",
+  "description": "Service résultat du projet LA Web",
   "keywords": [],
   "contributors": [
     {
@@ -43,7 +43,8 @@
     "prepare": "husky install"
   },
   "_moduleAliases": {
-    "@app": "build/app"
+    "@app": "build/app",
+    "@config": "build/config"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
