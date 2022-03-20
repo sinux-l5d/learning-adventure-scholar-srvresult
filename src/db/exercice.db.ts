@@ -94,4 +94,4 @@ ExerciceEtudiantSchema.set('toJSON', {
   },
 });
 
-export const ExerciceEtudiant = model('ExerciceEtudiant', ExerciceEtudiantSchema);
+export const ExerciceEtu = model('ExerciceEtudiant', ExerciceEtudiantSchema);

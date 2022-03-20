@@ -1,5 +1,6 @@
 import { ResultatDepuisExercice } from '@type/ResultatDepuisExercice';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
+import * as repo from '@repositories/resultat.repo';
 
 /**
  * Service de resultat
@@ -9,13 +10,14 @@ export class ResultatService {
   /**
    * Ajoute l'exercice commencé par l'étudiant a la bdd
    *
-   * @param exercicesRecolted JSON les exercices à insérer en bdd
-   * @returns
+   * @param exoEtu L'exercice à insérer en bdd de type ExerciceEtudiant
+   * @returns true si tout c'est bien passé lors de l'ajout.
    * @throws Error si erreur lors de l'insertion
    */
-  public static async postNewExercice(exoEtu: ExerciceEtudiant): Promise<void> {
-    //await repo.postNewExercices(resultat0);
-    return;
+  public static async addNewExerciceToDB(exoEtu: ExerciceEtudiant): Promise<boolean> {
+    return repo.addNewExerciceToDB(exoEtu).then(() => {
+      return true;
+    });
   }
 
   // J'ai séparé le traitement, est ce pertinent ?
@@ -51,7 +53,7 @@ export class ResultatService {
       nomExo: resDepuisExercice['nomExo'],
       idEtu: resDepuisExercice['idEtu'],
       idSession: resDepuisExercice['idSession'],
-      nomSession: 'string', // pas implémenté dans le service exercice
+      nomSession: 'pas_de_session', // pas implémenté dans le service exercice
       estFini: false,
       langage: resDepuisExercice['langage'],
       themes: resDepuisExercice['theme'],

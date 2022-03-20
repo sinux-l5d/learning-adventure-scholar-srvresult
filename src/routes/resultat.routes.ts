@@ -5,7 +5,7 @@ import { ResultatDepuisExercice } from '@type/ResultatDepuisExercice';
 const resultatRouter = Router();
 
 /**
- * Renvoie L'ex a inscrire en bdd resultat suivant de l'exo présent dans le chemin
+ * Convertit l'exercice reçus depuis le srvexo et l'ajoute dans la bdd
  *
  * @param req Objet Request d'Express
  * @param res Object Response d'Express
@@ -14,9 +14,19 @@ const exoDepuisResultat: RequestHandler = async (req, res, next) => {
   const exo: ResultatDepuisExercice = req.body;
   ResultatService.getExoDepuisResultat(exo)
     .then((resultatPourBdd) => {
-      console.log(resultatPourBdd);
-      //TODO: Faut-il envoyer un json ? (pas précisé dans la doc)
-      res.sendStatus(200);
+      if (resultatPourBdd) {
+        return resultatPourBdd;
+      } else {
+        throw new Error(
+          'ResultatService.getExoDepuisResultat : Erreur lors de la conversion de Exercice de srvexo -> Exercice pour bdd result',
+        );
+      }
+    })
+    .then((resultatPourBdd) => {
+      ResultatService.addNewExerciceToDB(resultatPourBdd).then(() => {
+        // L'exercice a bien été ajouté a la bdd
+        res.sendStatus(200);
+      });
     })
     .catch(next);
 };
