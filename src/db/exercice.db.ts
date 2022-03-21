@@ -3,24 +3,29 @@ import { model, Schema } from 'mongoose';
 import { Tentative } from '@type/Tentative';
 
 const TentativeSchema = new Schema<Tentative>({
-  resultState: {
+  id: {
     type: String,
-    enum: ['Ok', 'Faux', 'ErrorExecution', 'ErrorCompile'],
     required: true,
   },
-  erreurs: {
-    type: [String],
+  validationExercice: {
+    type: Boolean,
+    required: true,
+  },
+  logErreurs: {
+    type: String,
+    required: true,
   },
   dateSoumission: {
     type: Date,
     default: Date.now,
     required: true,
   },
-  code: {
+  reponseEtudiant: {
     type: String,
     required: true,
   },
 });
+
 /**
  * Schéma d'un exercice en base de donnée.
  */

@@ -1,6 +1,8 @@
 import { ResultatDepuisExercice } from '@type/ResultatDepuisExercice';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
 import * as repo from '@repositories/resultat.repo';
+import { Tentative } from '@type/Tentative';
+import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
 
 /**
  * Service de resultat
@@ -15,12 +17,8 @@ export class ResultatService {
    * @throws Error si erreur lors de l'insertion
    */
   public static async addNewExerciceToDB(exoEtu: ExerciceEtudiant): Promise<boolean> {
-    return repo.addNewExerciceToDB(exoEtu).then(() => {
-      return true;
-    });
+    return await repo.addNewExerciceToDB(exoEtu);
   }
-
-  // J'ai séparé le traitement, est ce pertinent ?
 
   /**
    *
@@ -64,5 +62,22 @@ export class ResultatService {
       tentatives: [],
     };
     return resJSON;
+  }
+
+  /**
+   * Récupère l'id de l'exercice selon l'id de l'exercice, etudiant et session en entrée
+   *
+   * @param idExo Id de l'exercice commencé par l'étudiant
+   * @param idEtu Id de l'étudiant
+   * @param idSes Id de la session ou se trouve l'exerice
+   * @returns l'id de l'exercice de la bdd résultat correspondant aux ids
+   * @throws Error si erreur lors de la récuperation
+   */
+  public static async getIdExoFromExoUsrSes(
+    idExo: TentativeDepuisEval['exoId'],
+    idEtu: TentativeDepuisEval['userId'],
+    idSes: TentativeDepuisEval['sessionId'],
+  ): Promise<ExerciceEtudiant['id']> {
+    return await repo.getIdExoFromExoUsrSes(idExo, idEtu, idSes);
   }
 }
