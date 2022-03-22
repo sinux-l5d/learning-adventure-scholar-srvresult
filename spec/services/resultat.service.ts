@@ -1,4 +1,4 @@
-import { ResultatService } from '@services/resultat.service';
+import { ExerciceService } from '@services/exercice.service';
 import * as repo from '@repositories/resultat.repo';
 
 jest.mock('@repositories/resultat.repo');
@@ -40,15 +40,15 @@ const resultat = [
 ];
 
 describe('Service Resultat', () => {
-  test('getResultatsEtudiants: teste le resultat que renvoie la fonction de recuperation des resultats des tentatives etudiants', async () => {
-    mockRepo.getResultatsEtudiants.mockResolvedValueOnce(resultat);
-    const tabResult = await ResultatService.getResultatsEtudiants();
+  test('getExerciceEtudiants: teste le resultat que renvoie la fonction de recuperation des resultats des tentatives etudiants', async () => {
+    mockRepo.getExerciceEtudiants.mockResolvedValueOnce(resultat);
+    const tabResult = await ExerciceService.getExerciceEtudiants();
     expect(tabResult).toBeDefined(); //est definis ?
     expect(tabResult).toBe(resultat); //On s'attends a ce que le tabResult soit composé de resultats.
   });
-  test('getResultatsEtudiants: teste que le tableau de resultats est bien défini et non undefined', async () => {
-    mockRepo.getResultatsEtudiants.mockResolvedValueOnce([]);
-    const tabResult = await ResultatService.getResultatsEtudiants();
+  test('getExerciceEtudiants: teste que le tableau de resultats est bien défini et non undefined', async () => {
+    mockRepo.getExerciceEtudiants.mockResolvedValueOnce([]);
+    const tabResult = await ExerciceService.getExerciceEtudiants();
     expect(tabResult).toBeDefined(); //Est definis ?
     expect(tabResult).toStrictEqual([]); // le tableau est-il bien vide ? L'appli crash t'elle?
   });

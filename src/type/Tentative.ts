@@ -3,8 +3,8 @@ import { ResultState } from './ResultState';
 // TODO: doctrings
 export type Tentative = {
   id: string;
-  resultState: ResultState;
-  erreurs: Array<string>;
+  validationExercice: boolean;
+  logErreurs: string;
   dateSoumission: Date;
-  code: string;
+  reponseEtudiant: string;
 };

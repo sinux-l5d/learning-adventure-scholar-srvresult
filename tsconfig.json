@@ -19,10 +19,10 @@
     "paths": {
       "@app": ["src/app"],
       "@type/*": ["src/type/*"],
+      "@db/*": ["src/db/*"],
       "@config": ["src/config"],
       "@services/*": ["src/services/*"],
-      "@repositories/*": ["src/repositories/*"],
-      "@db/*": ["src/db/*"]
+      "@repositories/*": ["src/repositories/*"]
     }
   },
   "include": ["src/**/*.ts", "spec/**/*.ts"],

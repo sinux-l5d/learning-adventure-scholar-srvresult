@@ -3,24 +3,25 @@ import { model, Schema } from 'mongoose';
 import { Tentative } from '@type/Tentative';
 
 const TentativeSchema = new Schema<Tentative>({
-  resultState: {
-    type: String,
-    enum: ['Ok', 'Faux', 'ErrorExecution', 'ErrorCompile'],
+  validationExercice: {
+    type: Boolean,
     required: true,
   },
-  erreurs: {
-    type: [String],
+  logErreurs: {
+    type: String,
+    required: true,
   },
   dateSoumission: {
     type: Date,
     default: Date.now,
     required: true,
   },
-  code: {
+  reponseEtudiant: {
     type: String,
     required: true,
   },
 });
+
 /**
  * Schéma d'un exercice en base de donnée.
  */
@@ -78,20 +79,22 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
   },
 });
 
-// Enlève les propriétés non voulues lorsque l'on transforme en JSON
-ExerciceEtudiantSchema.set('toJSON', {
-  // pour avoir `id`, alias natif de `_id`. virtual = alias
-  virtuals: true,
-  // pour ne pas avoir __v, version du document par Mongoose
-  versionKey: false,
-  // true par défaut, mais pour que vous sachiez: convertie les Maps en POJO
-  flattenMaps: true,
-  getters: false,
-  // delete `_id` manuellement
-  transform: (_doc, ret) => {
-    delete ret._id;
-    return ret;
-  },
+// Enlève les propriétés non voulu lorsque l'on transforme en JSON
+[TentativeSchema, ExerciceEtudiantSchema].forEach((schema) => {
+  schema.set('toJSON', {
+    // pour avoir `id`, alias natif de `_id`. virtual = alias
+    virtuals: true,
+    // pour ne pas avoir __v, version du document par Mongoose
+    versionKey: false,
+    // true par défaut, mais pour que vous sachiez: convertie les Maps en POJO
+    flattenMaps: true,
+    getters: false,
+    // delete `_id` manuellement
+    transform: (_doc, ret) => {
+      delete ret._id;
+      return ret;
+    },
+  });
 });
 
-export const ExerciceEtudiantModel = model('ExerciceEtudiant', ExerciceEtudiantSchema);
+export const ExerciceEtudiant = model('ExerciceEtudiant', ExerciceEtudiantSchema);
