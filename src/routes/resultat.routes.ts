@@ -37,9 +37,9 @@ const exoDepuisResultat: RequestHandler = async (req, res, next) => {
  */
 const ajouteNouvelleTentative: RequestHandler = async (req, res, next) => {
   const tentative: TentativeDepuisEval = req.body;
-  const idExo = tentative['exoId'];
-  const idEtu = tentative['userId'];
-  const idSes = tentative['sessionId'];
+  const idExo = tentative['idExo'];
+  const idEtu = tentative['idEtu'];
+  const idSes = tentative['idSession'];
 
   // On récupère l'id de l'exercice ou il faudra ajouter la tentative dans la bdd résultat
   const idExoDBResult: ExerciceEtudiant['id'] = await ResultatService.getIdExoFromExoUsrSes(

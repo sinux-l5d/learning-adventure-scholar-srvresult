@@ -33,9 +33,9 @@ export const addNewExerciceToDB = async (
  * @throws Error si erreur lors de la récuperation
  */
 export const getIdExoFromExoUsrSes = async (
-  idExo: TentativeDepuisEval['exoId'],
-  idEtu: TentativeDepuisEval['userId'],
-  idSes: TentativeDepuisEval['sessionId'],
+  idExo: TentativeDepuisEval['idExo'],
+  idEtu: TentativeDepuisEval['idEtu'],
+  idSes: TentativeDepuisEval['idSession'],
 ): Promise<TExerciceEtudiant['id']> => {
   const filtre = { idExo: idExo, idEtu: idEtu, idSession: idSes };
   const id = await ExerciceEtudiant.findOne(filtre).exec();
@@ -70,9 +70,9 @@ export const addAttemptToDB = async (
     const last_tentative = tentatives_list[tentatives_list.length - 1];
     const tentative_retour = {
       id: last_tentative.id,
-      userId: exoEtu.idEtu,
-      exoId: exoEtu.idExo,
-      sessionId: exoEtu.idSession,
+      idEtu: exoEtu.idEtu,
+      idExo: exoEtu.idExo,
+      idSession: exoEtu.idSession,
       reponseEtudiant: last_tentative.reponseEtudiant,
       logErreurs: last_tentative.logErreurs,
       validationExercice: last_tentative.validationExercice,
