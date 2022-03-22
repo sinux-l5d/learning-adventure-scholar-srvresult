@@ -17,7 +17,8 @@ export const addNewExerciceToDB = async (
   // La Promise renvoie true si l'exercice à bien été ajouté et false si il y a eu un problème
   try {
     return await exoAAjouter.save();
-  } catch {
+  } catch (err) {
+    console.error(err);
     throw new Error("addNewExerciceToDB : Erreur lors de l'ajout du nouvel exercice");
   }
 };
@@ -57,14 +58,28 @@ export const getIdExoFromExoUsrSes = async (
 export const addAttemptToDB = async (
   tentativeForDB: Omit<Tentative, 'id'>,
   idExoDBResult: TExerciceEtudiant['id'],
-): Promise<TExerciceEtudiant> => {
+): Promise<TentativeDepuisEval & { id: Tentative['id'] }> => {
   const exoEtu = await ExerciceEtudiant.findByIdAndUpdate(
     { _id: idExoDBResult },
     { $push: { tentatives: tentativeForDB } },
+    { new: true },
   ).exec();
 
   if (exoEtu) {
-    return exoEtu;
+    const tentatives_list = exoEtu.tentatives;
+    const last_tentative = tentatives_list[tentatives_list.length - 1];
+    const tentative_retour = {
+      id: last_tentative.id,
+      userId: exoEtu.idEtu,
+      exoId: exoEtu.idExo,
+      sessionId: exoEtu.idSession,
+      reponseEtudiant: last_tentative.reponseEtudiant,
+      logErreurs: last_tentative.logErreurs,
+      validationExercice: last_tentative.validationExercice,
+      dateSoumission: last_tentative.dateSoumission,
+    };
+
+    return tentative_retour;
   }
   // Si exoEtu est null retourne une erreur
   throw new Error("addAttemptToDB : Erreur lors de l'ajout de la tentative dans la bdd");

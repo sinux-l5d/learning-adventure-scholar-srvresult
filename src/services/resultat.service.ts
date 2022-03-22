@@ -42,7 +42,7 @@ export class ResultatService {
       nomSession: 'pas_de_session', // pas implémenté dans le service exercice
       estFini: false,
       langage: resDepuisExercice['langage'],
-      themes: resDepuisExercice['theme'],
+      themes: resDepuisExercice['themes'],
       difficulte: resDepuisExercice['difficulte'],
       tempsMoyen: resDepuisExercice['tempsMoyen'],
       tempsMaximum: resDepuisExercice['tempsMaximum'],
@@ -95,7 +95,7 @@ export class ResultatService {
   public static async addAttemptToDB(
     tentativeForDB: Omit<Tentative, 'id'>,
     idExoDBResult: ExerciceEtudiant['id'],
-  ): Promise<ExerciceEtudiant> {
+  ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> {
     return repo.addAttemptToDB(tentativeForDB, idExoDBResult);
   }
 }

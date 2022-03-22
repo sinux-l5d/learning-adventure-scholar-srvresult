@@ -42,7 +42,7 @@ export type ResultatDepuisExercice = {
    * @example
    * boucles, recursif
    */
-  theme: Array<string>;
+  themes: Array<string>;
 
   /**
    * Langage de l'exercice

@@ -22,9 +22,9 @@ const exoDepuisResultat: RequestHandler = async (req, res, next) => {
   // On ajoute l'exercice a la bdd résultat
   //TODO: Gerer cas ou plusieurs fois même exo/session ?
   ResultatService.addNewExerciceToDB(exoForDb)
-    .then(() => {
+    .then((exoAdded) => {
       // L'exercice a bien été ajouté a la bdd
-      res.sendStatus(200);
+      res.status(200).json({ exercice: exoAdded });
     })
     .catch(next);
 };
@@ -53,9 +53,9 @@ const ajouteNouvelleTentative: RequestHandler = async (req, res, next) => {
 
   // On ajoute la tentative la bdd résultat
   ResultatService.addAttemptToDB(tentativeForDB, idExoDBResult)
-    .then(() => {
+    .then((tentativeAdded) => {
       // La tentative a bien été ajouté a la bdd
-      res.sendStatus(200);
+      res.status(200).json({ tentative: tentativeAdded });
     })
     .catch(next);
 };
