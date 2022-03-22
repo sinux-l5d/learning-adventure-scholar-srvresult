@@ -68,6 +68,11 @@ export const addAttemptToDB = async (
   if (exoEtu) {
     const tentatives_list = exoEtu.tentatives;
     const last_tentative = tentatives_list[tentatives_list.length - 1];
+    // Si la tentative est validé alors l'exercice est fini
+    if (last_tentative.validationExercice == true) {
+      await ExerciceEtudiant.findByIdAndUpdate({ _id: idExoDBResult }, { estFini: true }).exec();
+    }
+
     const tentative_retour = {
       id: last_tentative.id,
       idEtu: exoEtu.idEtu,
