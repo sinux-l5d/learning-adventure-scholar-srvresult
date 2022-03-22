@@ -7,9 +7,8 @@ module.exports = {
   },
   testEnvironment: 'node',
   testRegex: './spec/.+\\.ts$',
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  "roots": [
-    "<rootDir>/spec"
-  ]
+  roots: ['<rootDir>/spec'],
+  modulePathIgnorePatterns: ['spec/db.ts'],
 };
