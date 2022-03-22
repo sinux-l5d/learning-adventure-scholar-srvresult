@@ -78,7 +78,7 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
   },
 });
 
-// Enlève les propriétés non voulu lorsque l'on transforme en JSON
+// Enlève les propriétés non voulues lorsque l'on transforme en JSON
 ExerciceEtudiantSchema.set('toJSON', {
   // pour avoir `id`, alias natif de `_id`. virtual = alias
   virtuals: true,
@@ -94,4 +94,4 @@ ExerciceEtudiantSchema.set('toJSON', {
   },
 });
 
-export const ExerciceEtudiant = model('ExerciceEtudiant', ExerciceEtudiantSchema);
+export const ExerciceEtudiantModel = model('ExerciceEtudiant', ExerciceEtudiantSchema);

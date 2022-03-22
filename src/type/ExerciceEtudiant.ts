@@ -2,7 +2,7 @@ import { Tentative } from './Tentative';
 
 // TODO: doctrings
 export type ExerciceEtudiant = {
-  id: string;
+  // id: string;
   idExo: string;
   nomExo: string;
   idEtu: string;
