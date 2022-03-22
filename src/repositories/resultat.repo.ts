@@ -89,3 +89,14 @@ export const addAttemptToDB = async (
   // Si exoEtu est null retourne une erreur
   throw new Error("addAttemptToDB : Erreur lors de l'ajout de la tentative dans la bdd");
 };
+
+/**
+ * Recupere tous les resultats des etudiants
+ * @returns {Promise<ExerciceEtudiant[]>} - Une promesse qui renvoie un tableau de resultats d'étudiants.
+ * @Todo : Creer le AppError pour ce repo
+ */
+export const getExerciceEtudiants = async (): Promise<TExerciceEtudiant[]> => {
+  const exo = await ExerciceEtudiant.find().exec();
+  if (exo) return exo;
+  throw new Error('Exercice not found');
+};

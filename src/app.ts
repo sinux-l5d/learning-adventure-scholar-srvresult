@@ -1,22 +1,20 @@
 import express from 'express';
+import globalRouter from './routes';
 import config from '@config';
-import resultatRouter from './routes/resultat.routes';
-
 const app = express();
 
-// Disable header mentioning Express
-app.disable('x-powered-by');
-
-// Permet d'utiliser req.body pour les requêtes POST
 app.use(express.json());
 
-// Utilisation du resultRouter
-app.use(config.APP_ROOT ?? '/', resultatRouter);
+// Désactive le header indiquant que c'est une application express
+app.disable('x-powered-by');
 
-// Handle API's root
-app.get('/', (req, res) => {
-  // Return JSON with status 200
-  res.status(200).send({ message: 'Hello World !' });
+app.use(function (_req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  next();
 });
+
+app.use(config.APP_ROOT ?? '/', globalRouter);
 
 export default app;

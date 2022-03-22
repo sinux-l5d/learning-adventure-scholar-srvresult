@@ -1,14 +1,14 @@
 import { ResultatDepuisExercice } from '@type/ResultatDepuisExercice';
-import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
-import * as repo from '@repositories/resultat.repo';
 import { Tentative } from '@type/Tentative';
 import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
+import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
+import * as repo from '@repositories/resultat.repo';
 
 /**
  * Service de resultat
  */
 
-export class ResultatService {
+export class ExerciceService {
   /**
    * Ajoute l'exercice commencé par l'étudiant a la bdd
    *
@@ -97,5 +97,13 @@ export class ResultatService {
     idExoDBResult: ExerciceEtudiant['id'],
   ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> {
     return repo.addAttemptToDB(tentativeForDB, idExoDBResult);
+  }
+
+  /**
+   * Get the resultats of all the etudiants.
+   * @returns {Promise<ExerciceEtudiant[]>} - A promise that resolves to an array of ExerciceEtudiant objects.
+   */
+  public static async getExerciceEtudiants(): Promise<ExerciceEtudiant[]> {
+    return await repo.getExerciceEtudiants();
   }
 }
