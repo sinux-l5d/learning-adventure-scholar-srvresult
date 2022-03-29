@@ -24,11 +24,8 @@ const ajouteNouvelleTentative: RequestHandler = async (req, res, next) => {
     idSes,
   );
 
-  // On convertit la tentative reçu du srveval pour un format compatible avec la bdd résultat
-  const tentativeForDB = ExerciceService.convertTentativeForDB(tentative);
-
   // On ajoute la tentative la bdd résultat
-  ExerciceService.addTentativeToDB(tentativeForDB, idExoDBResult)
+  ExerciceService.addTentativeToDB(tentative, idExoDBResult)
     .then((tentativeAdded) => {
       // La tentative a bien été ajouté a la bdd
       res.status(200).json({ tentative: tentativeAdded });
