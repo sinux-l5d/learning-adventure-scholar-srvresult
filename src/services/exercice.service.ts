@@ -16,10 +16,10 @@ export class ExerciceService {
    * @returns true si tout c'est bien passé lors de l'ajout.
    * @throws Error si erreur lors de l'insertion
    */
-  public static async addNewExerciceToDB(
-    exoEtu: Omit<ExerciceEtudiant, 'id'>,
-  ): Promise<ExerciceEtudiant> {
-    return await repo.addNewExerciceToDB(exoEtu);
+  public static async addNewExercice(exoEtu: ResultatDepuisExercice): Promise<ExerciceEtudiant> {
+    // On convertit l'exercice reçu du srvexo pour un format compatible avec la bdd résultat
+    const exoForDb = ExerciceService.construireResultatDepuisExercice(exoEtu);
+    return await repo.addNewExercice(exoForDb);
   }
 
   /**
@@ -75,7 +75,9 @@ export class ExerciceService {
    * @returns Tentative La tentative dans le bon format pour la bdd
    * @throws Error si erreur lors de la conversion
    */
-  public static convertAttemptForDB(tentativeFromEval: TentativeDepuisEval): Omit<Tentative, 'id'> {
+  public static convertTentativeForDB(
+    tentativeFromEval: TentativeDepuisEval,
+  ): Omit<Tentative, 'id'> {
     return {
       validationExercice: tentativeFromEval['validationExercice'],
       logErreurs: tentativeFromEval['logErreurs'],
@@ -92,11 +94,11 @@ export class ExerciceService {
    * @returns Tentative La tentative dans le bon format pour la bdd
    * @throws Error si erreur lors de la conversion
    */
-  public static async addAttemptToDB(
+  public static async addTentativeToDB(
     tentativeForDB: Omit<Tentative, 'id'>,
     idExoDBResult: ExerciceEtudiant['id'],
   ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> {
-    return repo.addAttemptToDB(tentativeForDB, idExoDBResult);
+    return repo.addTentativeToDB(tentativeForDB, idExoDBResult);
   }
 
   /**
