@@ -1,7 +1,8 @@
 import { Router, RequestHandler } from 'express';
-import { ExerciceService } from '@services/exercice.service';
 import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
+import { TentativeService } from '@services/tentative.service';
+import { ExerciceService } from '@services/exercice.service';
 
 const tentativeRouter = Router();
 
@@ -25,7 +26,7 @@ const ajouteNouvelleTentative: RequestHandler = async (req, res, next) => {
   );
 
   // On ajoute la tentative la bdd résultat
-  ExerciceService.addTentativeToDB(tentative, idExoDBResult)
+  TentativeService.addNewTentative(tentative, idExoDBResult)
     .then((tentativeAdded) => {
       // La tentative a bien été ajouté a la bdd
       res.status(200).json({ tentative: tentativeAdded });

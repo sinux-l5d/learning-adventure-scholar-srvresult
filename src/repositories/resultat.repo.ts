@@ -55,7 +55,7 @@ export const getIdExoFromExoUsrSes = async (
  * @returns Tentative La tentative dans le bon format pour la bdd
  * @throws Error si erreur lors de la conversion
  */
-export const addTentativeToDB = async (
+export const addNewTentative = async (
   tentativeForDB: Omit<Tentative, 'id'>,
   idExoDBResult: TExerciceEtudiant['id'],
 ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> => {
@@ -85,7 +85,7 @@ export const addTentativeToDB = async (
     };
   }
   // Si exoEtu est null retourne une erreur
-  throw new Error("addTentativeToDB : Erreur lors de l'ajout de la tentative dans la bdd");
+  throw new Error("addNewTentative : Erreur lors de l'ajout de la tentative dans la bdd");
 };
 
 /**

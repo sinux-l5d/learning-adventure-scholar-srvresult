@@ -72,43 +72,6 @@ export class ExerciceService {
   }
 
   /**
-   * Convertit la tentative reçu depuis le srveval dans le bon format pour la bdd
-   *
-   * @param tentativeFromEval La tentative dans le format envoyé par le srveval
-   * @returns Tentative La tentative dans le bon format pour la bdd
-   * @throws Error si erreur lors de la conversion
-   */
-  private static convertTentativeForDB(
-    tentativeFromEval: TentativeDepuisEval,
-  ): Omit<Tentative, 'id'> {
-    return {
-      validationExercice: tentativeFromEval['validationExercice'],
-      logErreurs: tentativeFromEval['logErreurs'],
-      dateSoumission: tentativeFromEval['dateSoumission'],
-      reponseEtudiant: tentativeFromEval['reponseEtudiant'],
-    };
-  }
-
-  /**
-   * Ajoute la tentative dans la bdd résultat
-   *
-   * @param tentativeForDB La tentative à ajouter dans la bdd
-   * @param idExoDBResult L'id de l'exercice dans lequel on ajoute la tentative
-   * @returns Tentative La tentative dans le bon format pour la bdd
-   * @throws Error si erreur lors de la conversion
-   */
-  public static async addTentativeToDB(
-    tentative: TentativeDepuisEval,
-    idExoDBResult: ExerciceEtudiant['id'],
-  ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> {
-    // On convertit la tentative reçu du srveval pour un format compatible avec la bdd résultat
-    const tentativeForDB = this.convertTentativeForDB(tentative);
-    const tentativeDB = await repo.addTentativeToDB(tentativeForDB, idExoDBResult);
-    SocketService.getInstance().emitTentative(tentativeDB);
-    return tentativeDB;
-  }
-
-  /**
    * Get the resultats of all the etudiants.
    * @returns A promise that resolves to an array of ExerciceEtudiant objects.
    */
