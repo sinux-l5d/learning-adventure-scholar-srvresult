@@ -34,6 +34,9 @@ const socketServer: MySocketServer = new Server(httpServer, {
   pingInterval: 10000,
   pingTimeout: 5000,
   cookie: false,
+  cors: {
+    origin: '*',
+  },
 });
 
 SocketService.initInstance(socketServer);
