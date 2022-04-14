@@ -3,6 +3,7 @@ import { Tentative } from '@type/Tentative';
 import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
 import * as repo from '@repositories/resultat.repo';
+import { SocketService } from './socket.service';
 
 /**
  * Service de resultat
@@ -16,10 +17,12 @@ export class ExerciceService {
    * @returns true si tout c'est bien passé lors de l'ajout.
    * @throws Error si erreur lors de l'insertion
    */
-  public static async addNewExerciceToDB(
-    exoEtu: Omit<ExerciceEtudiant, 'id'>,
-  ): Promise<ExerciceEtudiant> {
-    return await repo.addNewExerciceToDB(exoEtu);
+  public static async addNewExercice(exoEtu: ResultatDepuisExercice): Promise<ExerciceEtudiant> {
+    // On convertit l'exercice reçu du srvexo pour un format compatible avec la bdd résultat
+    const exoForDb = this.construireResultatDepuisExercice(exoEtu);
+    const exoDB = await repo.addNewExercice(exoForDb);
+    SocketService.getInstance().emitExercice(exoDB);
+    return exoDB;
   }
 
   /**
@@ -29,7 +32,7 @@ export class ExerciceService {
    * @returns exo sous la forme ExerciceEtudiant
    * @throws Error si l'exercice n'a pas été trouvé
    */
-  public static construireResultatDepuisExercice(
+  private static construireResultatDepuisExercice(
     resDepuisExercice: ResultatDepuisExercice,
   ): Omit<ExerciceEtudiant, 'id'> {
     // prend en paramètre l'exercice recu depuis le service exercice
@@ -69,39 +72,8 @@ export class ExerciceService {
   }
 
   /**
-   * Convertit la tentative reçu depuis le srveval dans le bon format pour la bdd
-   *
-   * @param tentativeFromEval La tentative dans le format envoyé par le srveval
-   * @returns Tentative La tentative dans le bon format pour la bdd
-   * @throws Error si erreur lors de la conversion
-   */
-  public static convertAttemptForDB(tentativeFromEval: TentativeDepuisEval): Omit<Tentative, 'id'> {
-    return {
-      validationExercice: tentativeFromEval['validationExercice'],
-      logErreurs: tentativeFromEval['logErreurs'],
-      dateSoumission: tentativeFromEval['dateSoumission'],
-      reponseEtudiant: tentativeFromEval['reponseEtudiant'],
-    };
-  }
-
-  /**
-   * Ajoute la tentative dans la bdd résultat
-   *
-   * @param tentativeForDB La tentative à ajouter dans la bdd
-   * @param idExoDBResult L'id de l'exercice dans lequel on ajoute la tentative
-   * @returns Tentative La tentative dans le bon format pour la bdd
-   * @throws Error si erreur lors de la conversion
-   */
-  public static async addAttemptToDB(
-    tentativeForDB: Omit<Tentative, 'id'>,
-    idExoDBResult: ExerciceEtudiant['id'],
-  ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> {
-    return repo.addAttemptToDB(tentativeForDB, idExoDBResult);
-  }
-
-  /**
    * Get the resultats of all the etudiants.
-   * @returns {Promise<ExerciceEtudiant[]>} - A promise that resolves to an array of ExerciceEtudiant objects.
+   * @returns A promise that resolves to an array of ExerciceEtudiant objects.
    */
   public static async getExerciceEtudiants(): Promise<ExerciceEtudiant[]> {
     return await repo.getExerciceEtudiants();
