@@ -10,7 +10,7 @@ import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
  * @throws Error si l'ajout n'a pas fonctionné
  * @return true si l'ajout c'est bien passé
  */
-export const addNewExerciceToDB = async (
+export const addNewExercice = async (
   exoEtu: Omit<TExerciceEtudiant, 'id'>,
 ): Promise<TExerciceEtudiant> => {
   const exoAAjouter = new ExerciceEtudiant(exoEtu);
@@ -19,7 +19,7 @@ export const addNewExerciceToDB = async (
     return await exoAAjouter.save();
   } catch (err) {
     console.error(err);
-    throw new Error("addNewExerciceToDB : Erreur lors de l'ajout du nouvel exercice");
+    throw new Error("addNewExercice : Erreur lors de l'ajout du nouvel exercice");
   }
 };
 
@@ -55,7 +55,7 @@ export const getIdExoFromExoUsrSes = async (
  * @returns Tentative La tentative dans le bon format pour la bdd
  * @throws Error si erreur lors de la conversion
  */
-export const addAttemptToDB = async (
+export const addNewTentative = async (
   tentativeForDB: Omit<Tentative, 'id'>,
   idExoDBResult: TExerciceEtudiant['id'],
 ): Promise<TentativeDepuisEval & { id: Tentative['id'] }> => {
@@ -73,7 +73,7 @@ export const addAttemptToDB = async (
       await ExerciceEtudiant.findByIdAndUpdate({ _id: idExoDBResult }, { estFini: true }).exec();
     }
 
-    const tentative_retour = {
+    return {
       id: last_tentative.id,
       idEtu: exoEtu.idEtu,
       idExo: exoEtu.idExo,
@@ -83,11 +83,9 @@ export const addAttemptToDB = async (
       validationExercice: last_tentative.validationExercice,
       dateSoumission: last_tentative.dateSoumission,
     };
-
-    return tentative_retour;
   }
   // Si exoEtu est null retourne une erreur
-  throw new Error("addAttemptToDB : Erreur lors de l'ajout de la tentative dans la bdd");
+  throw new Error("addNewTentative : Erreur lors de l'ajout de la tentative dans la bdd");
 };
 
 /**
