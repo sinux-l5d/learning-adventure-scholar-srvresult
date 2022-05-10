@@ -16,7 +16,7 @@ services:
     image: mongo:5.0.6
     restart: unless-stopped
     volumes:
-      - './mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh'
+      - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js'
       - 'srvexo-data-db:/data/db'
     environment:
       MONGO_INITDB_USER: $MONGO_APP_USER
