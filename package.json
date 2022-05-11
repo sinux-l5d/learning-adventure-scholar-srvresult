@@ -27,7 +27,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc --build tsconfig.prod.json",
     "start:dev": "nodemon",
-    "start": "npm run build && node -r module-alias/register build/index.js",
+    "start": "node -r module-alias/register build/index.js",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "prettier-format": "run-script-os",
@@ -45,8 +45,11 @@
   "_moduleAliases": {
     "@app": "build/app",
     "@config": "build/config",
+    "@type": "build/type",
     "@db": "build/db",
-    "@repositories": "build/repositories"
+    "@repositories": "build/repositories",
+    "@helpers": "build/helpers",
+    "@services": "build/services"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
