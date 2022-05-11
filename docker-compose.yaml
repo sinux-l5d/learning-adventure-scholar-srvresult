@@ -7,9 +7,10 @@ services:
       - '${APP_PORT_EXT:-3000}:3000'
     environment:
       APP_ROOT: '${APP_ROOT:-/}'
-      MONGO_APP_USER: $MONGO_APP_USER
-      MONGO_APP_PWD: $MONGO_APP_PWD
-      MONGO_DB_NAME: $MONGO_DB_NAME
+      MONGO_APP_USER: '${MONGO_APP_USER?error MONGO_APP_USER is not set}'
+      MONGO_APP_PWD: ${MONGO_APP_PWD?error MONGO_APP_PWD is not set}
+      MONGO_DB_NAME: ${MONGO_DB_NAME?error MONGO_DB_NAME is not set}
+      MONGO_PORT_EXT: ${MONGO_PORT_EXT?error MONGO_PORT_EXT is not set}
       MONGO_HOST: db
 
   db:
@@ -19,9 +20,9 @@ services:
       - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js'
       - 'srvexo-data-db:/data/db'
     environment:
-      MONGO_INITDB_USER: $MONGO_APP_USER
-      MONGO_INITDB_PASSWORD: $MONGO_APP_PWD
-      MONGO_INITDB_DATABASE: $MONGO_DB_NAME
+      MONGO_INITDB_USER: ${MONGO_APP_USER?error MONGO_APP_USER is not set}
+      MONGO_INITDB_PASSWORD: ${MONGO_APP_PWD?error MONGO_APP_PWD is not set}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME?error MONGO_DB_NAME is not set}
 
 volumes:
   srvexo-data-db:

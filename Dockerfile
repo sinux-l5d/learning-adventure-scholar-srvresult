@@ -6,8 +6,6 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 
-#ENV NODE_ENV=production
-
 RUN npm install
 
 COPY . .
@@ -23,11 +21,6 @@ COPY --from=build /app/package-lock.json .
 
 ENV HUSKY=0
 ENV NODE_ENV=production
-
-ENV MONGO_HOST=db
-ENV MONGO_APP_USER=laweb
-ENV MONGO_PORT_EXT=27017
-ENV MONGO_DB_NAME=lawebdb
 
 RUN npm install --production --ignore-scripts
 
