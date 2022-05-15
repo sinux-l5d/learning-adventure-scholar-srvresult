@@ -3,9 +3,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "commentTranslate.source": "Google",
-  "docwriter.progress.trackMethods": true,
-  "docwriter.progress.trackClasses": true,
-  "docwriter.progress.trackTypes": true,
-  "docwriter.language": "French"
+  "docwriter.language": "French",
+  "files.associations": {
+    "env.example.*": "dotenv"
+  }
 }

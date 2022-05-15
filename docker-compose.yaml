@@ -7,7 +7,6 @@ services:
       - '${APP_PORT_EXT:-3000}:3000'
     environment:
       APP_ROOT: '${APP_ROOT:-/}'
-      STRAT_URL: ${STRAT_URL?error STRAT_URL is not set}
       MONGO_APP_USER: '${MONGO_APP_USER?error MONGO_APP_USER is not set}'
       MONGO_APP_PWD: ${MONGO_APP_PWD?error MONGO_APP_PWD is not set}
       MONGO_DB_NAME: ${MONGO_DB_NAME?error MONGO_DB_NAME is not set}
