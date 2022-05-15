@@ -2,7 +2,8 @@
 export type TentativeDepuisEval = {
   idEtu: string;
   idExo: string;
-  idSession: string; //TODO: Il en faut un ?
+  idSession: string;
+  idSeance: string;
   reponseEtudiant: string;
   logErreurs: string;
   validationExercice: boolean;

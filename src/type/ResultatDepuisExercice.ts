@@ -28,6 +28,8 @@ export type ResultatDepuisExercice = {
    */
   nomSession: string;
 
+  idSeance: string;
+
   /**
    * Difficulté de l'exercice
    *

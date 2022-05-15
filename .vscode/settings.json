@@ -6,5 +6,6 @@
   "commentTranslate.source": "Google",
   "docwriter.progress.trackMethods": true,
   "docwriter.progress.trackClasses": true,
-  "docwriter.progress.trackTypes": true
+  "docwriter.progress.trackTypes": true,
+  "docwriter.language": "French"
 }
