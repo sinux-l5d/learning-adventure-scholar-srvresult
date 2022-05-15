@@ -20,6 +20,10 @@ const TentativeSchema = new Schema<Tentative>({
     type: String,
     required: true,
   },
+  idSeance: {
+    type: String,
+    required: true,
+  },
 });
 
 /**
@@ -44,6 +48,10 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
   },
   nomSession: {
     type: String,
+  },
+  idSeance: {
+    type: String,
+    required: true,
   },
   estFini: {
     type: Boolean,

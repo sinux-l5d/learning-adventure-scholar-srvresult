@@ -42,7 +42,7 @@ const socketServer: MySocketServer = new Server(httpServer, {
 SocketService.initInstance(socketServer);
 
 /* Sert le fichier front-dev.html en mode développement.*/
-if (config.NODE_ENV === 'developpment') {
+if (config.NODE_ENV === 'development') {
   app.get('/front-dev', (req, res) => {
     res.sendFile('front-dev.html', { root: './' });
   });
@@ -50,5 +50,5 @@ if (config.NODE_ENV === 'developpment') {
 
 const port: number = Number(config.APP_PORT_EXT) || 3000;
 httpServer.listen(port, () => {
-  console.log('Server is running on port ' + port);
+  console.log('Server is running on port ' + port + ' in ' + config.NODE_ENV + ' mode.');
 });

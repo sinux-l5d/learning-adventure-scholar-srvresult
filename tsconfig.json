@@ -22,7 +22,8 @@
       "@db/*": ["src/db/*"],
       "@config": ["src/config"],
       "@services/*": ["src/services/*"],
-      "@repositories/*": ["src/repositories/*"]
+      "@repositories/*": ["src/repositories/*"],
+      "@helpers/*": ["src/helpers/*"]
     }
   },
   "include": ["src/**/*.ts", "spec/**/*.ts"],

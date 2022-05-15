@@ -20,6 +20,7 @@ const resultat = [
     debut: new Date(),
     tentatives: [],
     id: '6234e1c446358dcf1450ef8e',
+    idSeance: '6006e1c446358dcf1450y4fl',
   },
   {
     idExo: '4561384324132',
@@ -36,6 +37,7 @@ const resultat = [
     debut: new Date(),
     tentatives: [],
     id: '6234e1d246358dcf1450ef90',
+    idSeance: '6006e1c446358dcf1450y4fl',
   },
 ];
 

@@ -44,9 +44,11 @@
   },
   "_moduleAliases": {
     "@app": "build/app",
-    "@config": "build/config",
     "@db": "build/db",
-    "@repositories": "build/repositories"
+    "@config": "build/config",
+    "@services": "build/services",
+    "@repositories": "build/repositories",
+    "@helpers": "build/helpers"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
