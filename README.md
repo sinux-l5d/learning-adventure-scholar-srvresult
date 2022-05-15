@@ -1,5 +1,7 @@
 # LA Web | Service d'exercices
 
+Pour l'installation, voir [INSTALL.md](INSTALL.md).
+
 ## Avant de développer
 
 Avant de commencer à coder sur une nouvelle machine, il y a quelques étapes :

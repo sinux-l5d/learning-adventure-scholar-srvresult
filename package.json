@@ -27,7 +27,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc --build tsconfig.prod.json",
     "start:dev": "nodemon",
-    "start": "npm run build && node -r module-alias/register build/index.js",
+    "start": "node -r module-alias/register build/index.js",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "prettier-format": "run-script-os",
@@ -40,7 +40,7 @@
     "prettier-watch:default": "onchange '(src|spec)/**/*.ts' -- prettier --write {{changed}}",
     "test": "jest",
     "test:dev": "jest --watchAll",
-    "prepare": "husky install"
+    "prepare": "./prepare.sh"
   },
   "_moduleAliases": {
     "@app": "build/app",
