@@ -69,6 +69,7 @@ export class ExerciceService {
       tempsMaximum: resDepuisExercice['tempsMaximum'],
       debut: new Date(),
       tentatives: [],
+      aides: [],
     };
   }
 

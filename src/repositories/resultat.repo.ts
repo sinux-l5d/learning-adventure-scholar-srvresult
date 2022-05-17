@@ -4,6 +4,8 @@ import { ExerciceEtudiant as TExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { Tentative } from '@type/Tentative';
 import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
 import { AppError } from '@helpers/AppError.helper';
+import { Aide } from '@type/Aide';
+import { AideARenvoyer } from '@type/AideARenvoyer';
 
 /**
  * Ajoute un nouvelle exercice à la bdd résultat
@@ -89,6 +91,40 @@ export const addNewTentative = async (
   }
   // Si exoEtu est null retourne une erreur
   throw new AppError("addNewTentative : Erreur lors de l'ajout de la tentative dans la bdd", 500);
+};
+
+/**
+ * Ajoute la demande d'aide dans la bdd résultat
+ *
+ * @param aideForDB La tentative à ajouter dans la bdd
+ * @param idExoDBResult L'id de l'exercice dans lequel on ajoute la tentative
+ * @returns Aide La demande d'aide dans le bon format pour la bdd
+ * @throws Error si erreur lors de la conversion
+ */
+export const addNewAide = async (
+  aideForDB: Omit<Aide, 'id'>,
+  idExoDBResult: TExerciceEtudiant['id'],
+): Promise<AideARenvoyer> => {
+  const exoEtu = await ExerciceEtudiant.findByIdAndUpdate(
+    { _id: idExoDBResult },
+    { $push: { aides: aideForDB } },
+    { new: true },
+  ).exec();
+
+  if (exoEtu) {
+    const last_aide = exoEtu.aides[exoEtu.aides.length - 1];
+    return {
+      id: last_aide.id,
+      idEtu: exoEtu.idEtu,
+      idExo: exoEtu.idExo,
+      idSession: exoEtu.idSession,
+      idSeance: exoEtu.idSeance,
+      resolue: last_aide.resolue,
+      date: last_aide.date,
+    };
+  }
+  // Si exoEtu est null retourne une erreur
+  throw new AppError("addNewAide : Erreur lors de l'ajout de la demande d'aide dans la bdd", 500);
 };
 
 /**
