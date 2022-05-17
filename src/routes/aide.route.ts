@@ -26,7 +26,7 @@ const resolveAide: RequestHandler = async (req, res, next) => {
     .catch(next);
 };
 
-aideRouter.post('/resolve', resolveAide);
+aideRouter.get('/resolve', resolveAide);
 
 /**
  * Recupère l'ID de exercice commencé par l'étudiant
