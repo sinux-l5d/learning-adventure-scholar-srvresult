@@ -127,6 +127,36 @@ export const addNewAide = async (
   throw new AppError("addNewAide : Erreur lors de l'ajout de la demande d'aide dans la bdd", 500);
 };
 
+export const resolveAides = async (
+  idExoDBResult: TExerciceEtudiant['id'],
+): Promise<AideARenvoyer[]> => {
+  const exoEtuAvant = await ExerciceEtudiant.findById(idExoDBResult).exec();
+  const exoEtuApres = await ExerciceEtudiant.findByIdAndUpdate(
+    { _id: idExoDBResult },
+    { $set: { 'aides.$.resolue': true } },
+  ).exec();
+
+  if (exoEtuAvant && exoEtuApres) {
+    const aidesResolues: AideARenvoyer[] = [];
+    exoEtuAvant.aides.forEach((aide) => {
+      if (!aide.resolue) {
+        aidesResolues.push({
+          id: aide.id,
+          idEtu: exoEtuAvant.idEtu,
+          idExo: exoEtuAvant.idExo,
+          idSession: exoEtuAvant.idSession,
+          idSeance: exoEtuAvant.idSeance,
+          resolue: true,
+          date: aide.date,
+        });
+      }
+    });
+    return aidesResolues;
+  }
+  // Si exoEtu est null retourne une erreur
+  throw new AppError("addNewAide : Erreur lors de l'ajout de la demande d'aide dans la bdd", 500);
+};
+
 /**
  * Recupere tous les resultats des etudiants
  * @returns {Promise<ExerciceEtudiant[]>} - Une promesse qui renvoie un tableau de resultats d'étudiants.

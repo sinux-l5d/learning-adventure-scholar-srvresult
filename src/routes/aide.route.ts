@@ -7,6 +7,27 @@ import { ExerciceService } from '@services/exercice.service';
 
 const aideRouter = Router();
 
+const resolveAide: RequestHandler = async (req, res, next) => {
+  const aide: AideDepuisEtudiant = req.body;
+  const idExo = aide['idExo'];
+  const idEtu = aide['idEtu'];
+  const idSes = aide['idSession'];
+  const idExoDBResult: ExerciceEtudiant['id'] = await ExerciceService.getIdExoFromExoUsrSes(
+    idExo,
+    idEtu,
+    idSes,
+  );
+
+  AideService.resoudAide(idExoDBResult)
+    .then((aideResolues: Aide[]) => {
+      // L'aide a bien été modifié a la bdd
+      res.status(200).json({ aides: aideResolues });
+    })
+    .catch(next);
+};
+
+aideRouter.post('/resolve', resolveAide);
+
 /**
  * Recupère l'ID de exercice commencé par l'étudiant
  *
@@ -29,7 +50,6 @@ const ajouteNouvelleAide: RequestHandler = async (req, res, next) => {
     idSes,
   );
 
-  //TODO: Gerer cas ou plusieurs fois même exo/session ?
   AideService.addNewAide(idExoDBResult)
     .then((aideAdded) => {
       // L'aide a bien été ajouté a la bdd
