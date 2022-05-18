@@ -10,6 +10,5 @@ const globalRouter = Router();
 
 globalRouter.use('/exercices', exerciceRouter);
 globalRouter.use('/tentatives', tentativeRouter);
-globalRouter.use('/aides', aideRouter);
 
 export default globalRouter;

@@ -83,9 +83,9 @@ export class ExerciceService {
    * @throws Error si erreur lors de la récuperation
    */
   public static async getIdExoFromExoUsrSes(
-    idExo: TentativeDepuisEval['idExo'],
-    idEtu: TentativeDepuisEval['idEtu'],
-    idSes: TentativeDepuisEval['idSession'],
+    idExo: string,
+    idEtu: string,
+    idSes: string,
   ): Promise<ExerciceEtudiant['id']> {
     return await repo.getIdExoFromExoUsrSes(idExo, idEtu, idSes);
   }

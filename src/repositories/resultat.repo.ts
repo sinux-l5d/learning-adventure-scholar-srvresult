@@ -37,9 +37,9 @@ export const addNewExercice = async (
  * @throws Error si erreur lors de la récuperation
  */
 export const getIdExoFromExoUsrSes = async (
-  idExo: TentativeDepuisEval['idExo'],
-  idEtu: TentativeDepuisEval['idEtu'],
-  idSes: TentativeDepuisEval['idSession'],
+  idExo: string,
+  idEtu: string,
+  idSes: string,
 ): Promise<TExerciceEtudiant['id']> => {
   const filtre = { idExo: idExo, idEtu: idEtu, idSession: idSes };
   const id = await ExerciceEtudiant.findOne(filtre).exec();
@@ -74,7 +74,15 @@ export const addNewTentative = async (
     const last_tentative = tentatives_list[tentatives_list.length - 1];
     // Si la tentative est validé alors l'exercice est fini
     if (last_tentative.validationExercice == true) {
-      await ExerciceEtudiant.findByIdAndUpdate({ _id: idExoDBResult }, { estFini: true }).exec();
+      await ExerciceEtudiant.findOneAndUpdate(
+        { _id: idExoDBResult },
+        {
+          $set: {
+            estFini: true,
+            'aides.$[].resolue': true,
+          },
+        },
+      ).exec();
     }
 
     return {
@@ -133,7 +141,7 @@ export const resolveAides = async (
   const exoEtuAvant = await ExerciceEtudiant.findById(idExoDBResult).exec();
   const exoEtuApres = await ExerciceEtudiant.findByIdAndUpdate(
     { _id: idExoDBResult },
-    { $set: { 'aides.$.resolue': true } },
+    { $set: { 'aides.$[].resolue': true } },
   ).exec();
 
   if (exoEtuAvant && exoEtuApres) {

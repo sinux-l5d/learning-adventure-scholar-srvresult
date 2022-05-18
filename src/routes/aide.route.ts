@@ -8,15 +8,10 @@ import { ExerciceService } from '@services/exercice.service';
 const aideRouter = Router();
 
 const resolveAide: RequestHandler = async (req, res, next) => {
-  const aide: AideDepuisEtudiant = req.body;
-  const idExo = aide['idExo'];
-  const idEtu = aide['idEtu'];
-  const idSes = aide['idSession'];
-  const idExoDBResult: ExerciceEtudiant['id'] = await ExerciceService.getIdExoFromExoUsrSes(
-    idExo,
-    idEtu,
-    idSes,
-  );
+  console.log(req.params.idExoEtu);
+  const idExoDBResult = req.params.idExoEtu;
+
+  console.log(idExoDBResult);
 
   AideService.resoudAide(idExoDBResult)
     .then((aideResolues: Aide[]) => {
@@ -25,8 +20,6 @@ const resolveAide: RequestHandler = async (req, res, next) => {
     })
     .catch(next);
 };
-
-aideRouter.get('/resolve', resolveAide);
 
 /**
  * Recupère l'ID de exercice commencé par l'étudiant
@@ -49,7 +42,6 @@ const ajouteNouvelleAide: RequestHandler = async (req, res, next) => {
     idEtu,
     idSes,
   );
-
   AideService.addNewAide(idExoDBResult)
     .then((aideAdded) => {
       // L'aide a bien été ajouté a la bdd
@@ -58,6 +50,7 @@ const ajouteNouvelleAide: RequestHandler = async (req, res, next) => {
     .catch(next);
 };
 
-aideRouter.post('/', ajouteNouvelleAide);
+aideRouter.put('/:idExoEtu/aides', resolveAide);
+aideRouter.post('/aides', ajouteNouvelleAide);
 
 export default aideRouter;
