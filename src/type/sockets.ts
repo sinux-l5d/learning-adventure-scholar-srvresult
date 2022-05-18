@@ -24,7 +24,7 @@ export type MessageAide = { etudiantDemandeAide: Aide };
 export interface ServerToClientEvents {
   tentatives: (tentative: MessageTentative) => void;
   exercices: (exercice: MessageExercice) => void;
-  aide: (aide: MessageAide) => void;
+  aides: (aide: MessageAide) => void;
 }
 
 // Utilisation de never = ne devrait jamais arriver.
