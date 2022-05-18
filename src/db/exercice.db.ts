@@ -1,6 +1,7 @@
 import { ExerciceEtudiant as TExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { model, Schema } from 'mongoose';
 import { Tentative } from '@type/Tentative';
+import { Aide } from '@type/Aide';
 
 const TentativeSchema = new Schema<Tentative>({
   validationExercice: {
@@ -23,6 +24,22 @@ const TentativeSchema = new Schema<Tentative>({
   idSeance: {
     type: String,
     required: true,
+  },
+});
+
+const AideSchema = new Schema<Aide>({
+  id: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+  resolue: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -84,6 +101,9 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
   },
   tentatives: {
     type: [TentativeSchema],
+  },
+  aides: {
+    type: [AideSchema],
   },
 });
 

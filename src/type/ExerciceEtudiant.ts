@@ -1,4 +1,5 @@
 import { Tentative } from './Tentative';
+import { Aide } from './Aide';
 
 // TODO: doctrings
 export type ExerciceEtudiant = {
@@ -17,4 +18,5 @@ export type ExerciceEtudiant = {
   tempsMaximum?: number;
   debut: Date;
   tentatives: Array<Tentative>;
+  aides: Array<Aide>;
 };

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import exerciceRouter from './exercice.route';
 import tentativeRouter from './tentative.route';
+import aideRouter from './aide.route';
 
 /**
  * Routeur global de l'application. Utilise les routeurs des ressources.
