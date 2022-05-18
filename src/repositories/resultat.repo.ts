@@ -1,7 +1,9 @@
 import { ExerciceEtudiant } from '@db/exercice.db';
+import { envDependent } from '@helpers/env.helper';
 import { ExerciceEtudiant as TExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { Tentative } from '@type/Tentative';
 import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
+import { AppError } from '@helpers/AppError.helper';
 
 /**
  * Ajoute un nouvelle exercice à la bdd résultat
@@ -44,7 +46,7 @@ export const getIdExoFromExoUsrSes = async (
     return id['id'];
   }
 
-  throw new Error('getIdExoFromExoUsrSes : Could not find the id');
+  throw new AppError(envDependent('', 'getIdExoFromExoUsrSes: ') + "L'exercice n'existe pas", 404);
 };
 
 /**
@@ -78,6 +80,7 @@ export const addNewTentative = async (
       idEtu: exoEtu.idEtu,
       idExo: exoEtu.idExo,
       idSession: exoEtu.idSession,
+      idSeance: exoEtu.idSeance,
       reponseEtudiant: last_tentative.reponseEtudiant,
       logErreurs: last_tentative.logErreurs,
       validationExercice: last_tentative.validationExercice,
@@ -85,7 +88,7 @@ export const addNewTentative = async (
     };
   }
   // Si exoEtu est null retourne une erreur
-  throw new Error("addNewTentative : Erreur lors de l'ajout de la tentative dans la bdd");
+  throw new AppError("addNewTentative : Erreur lors de l'ajout de la tentative dans la bdd", 500);
 };
 
 /**
@@ -96,5 +99,19 @@ export const addNewTentative = async (
 export const getExerciceEtudiants = async (): Promise<TExerciceEtudiant[]> => {
   const exo = await ExerciceEtudiant.find().exec();
   if (exo) return exo;
-  throw new Error('Exercice not found');
+  throw new AppError(envDependent('', 'getExericeEtudiants: ') + 'Exercice non trouvé', 404);
+};
+
+/**
+ * Obtient un ExerciceEtudiant par son identifiant
+ * @param id ObjectId de l'ExerciceEtudiant
+ * @returns Une promesse qui se résout en un tableau d'ExerciceEtudiant
+ * @throws AppError si l'exercice n'est pas trouvé
+ */
+export const getExerciceEtudiantById = async (
+  id: TExerciceEtudiant['id'],
+): Promise<TExerciceEtudiant> => {
+  const exo = await ExerciceEtudiant.findById(id).exec();
+  if (exo) return exo;
+  throw new AppError(envDependent('', 'getExericeEtudiantById: ') + 'Exercice non trouvé', 404);
 };

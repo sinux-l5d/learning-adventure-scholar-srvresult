@@ -1,6 +1,7 @@
 import express from 'express';
 import globalRouter from './routes';
 import config from '@config';
+import { handleMiddlewareErrors } from './middlewares/error.middleware';
 const app = express();
 
 app.use(express.json());
@@ -16,5 +17,7 @@ app.use(function (_req, res, next) {
 });
 
 app.use(config.APP_ROOT ?? '/', globalRouter);
+
+app.use(handleMiddlewareErrors);
 
 export default app;
