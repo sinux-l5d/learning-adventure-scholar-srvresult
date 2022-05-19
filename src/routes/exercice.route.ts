@@ -1,6 +1,7 @@
 import { Router, RequestHandler } from 'express';
 import { ExerciceService } from '@services/exercice.service';
 import { ResultatDepuisExercice } from '@type/ResultatDepuisExercice';
+import aideRouter from './aide.route';
 
 const resultatRouter = Router();
 
@@ -40,6 +41,7 @@ const exercicesDesEtudiants: RequestHandler = async (_req, res, next) => {
     .catch(next);
 };
 
+resultatRouter.use('/', aideRouter);
 resultatRouter.post('/', exoDepuisResultat);
 resultatRouter.get('/', exercicesDesEtudiants);
 

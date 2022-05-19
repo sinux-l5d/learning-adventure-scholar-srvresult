@@ -85,7 +85,7 @@ export class SocketService {
   public async emitAide(aideARenvoyer: AideARenvoyer) {
     if (!SocketService.instance) throw new Error('SocketService not initialized');
 
-    this.io.emit('aide', { etudiantDemandeAide: aideARenvoyer });
+    this.io.emit('aides', { etudiantDemandeAide: aideARenvoyer });
 
     console.log('aide envoyé à ' + (await this.getNbClients()) + ' clients');
   }
