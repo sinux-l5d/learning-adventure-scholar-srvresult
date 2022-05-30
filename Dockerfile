@@ -26,4 +26,6 @@ ENV NODE_ENV=production
 
 RUN npm install --production
 
+EXPOSE 3001
+
 CMD ["node", "-r", "module-alias/register", "./build/index.js"]
