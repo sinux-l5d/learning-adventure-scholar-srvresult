@@ -25,6 +25,8 @@ docker-compose up
 # éventuellement avec l'option --build pour être sûr que les conteneurs sont bien à leur dernière version
 ```
 
+Il y a un warning pour les variables d'environnement `MONGO_INITDB_USER` et `MONGO_INITDB_PASSWORD` : il faut les ignorées, elles sont rempli après coup par docker-compose.
+
 3. Éteindre et supprimer les conteneurs (ajouter -v pour supprimer les volumes de données)
 
 ```bash

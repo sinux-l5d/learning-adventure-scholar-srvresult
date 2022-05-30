@@ -48,7 +48,7 @@ if (config.NODE_ENV === 'development') {
   });
 }
 
-const port: number = Number(config.APP_PORT_EXT) || 3000;
+const port: number = Number(config.APP_PORT_EXT) || 3001;
 httpServer.listen(port, () => {
   console.log('Server is running on port ' + port + ' in ' + config.NODE_ENV + ' mode.');
 });
