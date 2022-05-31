@@ -1,6 +1,7 @@
 import { MySocket, MySocketServer } from '@type/sockets';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { Tentative } from '@type/Tentative';
+import { AideARenvoyer } from '@type/AideARenvoyer';
 
 /* La classe SocketService est un singleton qui est initialisé avec un serveur de socket. */
 export class SocketService {
@@ -74,6 +75,19 @@ export class SocketService {
     this.io.emit('tentatives', { etudiantFaitNouvelleTentative: tentative });
 
     console.log('Tentative envoyé à ' + (await this.getNbClients()) + ' clients');
+  }
+
+  /**
+   * Envoie une demande d'aide à tous les clients connectés
+   * @param aideARenvoyer La demande d'aide d'émission.
+   * @throws {Error} Si la classe SocketService n'a pas été initialisée.
+   */
+  public async emitAide(aideARenvoyer: AideARenvoyer) {
+    if (!SocketService.instance) throw new Error('SocketService not initialized');
+
+    this.io.emit('aides', { etudiantDemandeAide: aideARenvoyer });
+
+    console.log('aide envoyé à ' + (await this.getNbClients()) + ' clients');
   }
 
   /**
