@@ -16,7 +16,7 @@
 
 **Attention** : bien remplir les champs obligatoires dans le .env.
 
-1. Copier env.example.prod en .env et le remplir si besoin (normalement pas besoin) avec docker
+1. Copier env.example.prod en .env et le remplir si besoin (normalement pas besoin avec docker)
 
 2. Lancement les conteneurs (peut prendre jusqu'à 30 secondes)
 
@@ -59,3 +59,7 @@ Utiliser nvm pour installer la version de node souhaitée si besoin (`nvm instal
 
 4. Lancer le service :
    `npm run start`
+
+### Pour le reverse proxy
+
+N'oubliez pas de passer les headers `Connection` et `Upgrade`, nécessaire pour les requêtes websockets.
