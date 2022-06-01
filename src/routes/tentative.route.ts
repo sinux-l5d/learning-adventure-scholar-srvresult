@@ -19,18 +19,15 @@ const ajouteNouvelleTentative: RequestHandler = async (req, res, next) => {
   const idSes = tentative['idSession'];
 
   // On récupère l'id de l'exercice ou il faudra ajouter la tentative dans la bdd résultat
-  //TODO : rajouter séances
-  const idExoDBResult: ExerciceEtudiant['id'] = await ExerciceService.getIdExoFromExoUsrSes(
-    idExo,
-    idEtu,
-    idSes,
-  );
-
-  // On ajoute la tentative la bdd résultat
-  TentativeService.addNewTentative(tentative, idExoDBResult)
-    .then((tentativeAdded) => {
-      // La tentative a bien été ajouté a la bdd
-      res.status(200).json({ tentative: tentativeAdded });
+  ExerciceService.getIdExoFromExoUsrSes(idExo, idEtu, idSes)
+    .then((idExoDBResult: ExerciceEtudiant['id']) => {
+      // On ajoute la tentative la bdd résultat
+      TentativeService.addNewTentative(tentative, idExoDBResult)
+        .then((tentativeAdded) => {
+          // La tentative a bien été ajouté a la bdd
+          res.status(200).json({ tentative: tentativeAdded });
+        })
+        .catch(next);
     })
     .catch(next);
 };
