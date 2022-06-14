@@ -1,11 +1,10 @@
 import config from '@config';
 import { AppError } from '@helpers/AppError.helper';
-import { UserProfileService } from '@services/userprofile.service';
+import { AuthService } from '@services/auth.service';
 import { RequestHandler } from 'express';
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
-  if (config.APP_USERPROFILE_ENABLED === 'true') {
-    console.log('UserProfileService.isTokenValid()');
+  if (config.OAUTH2_ENABLED === 'true') {
     const bearer = req.headers.authorization;
 
     if (typeof bearer !== 'string' || !bearer.startsWith('Bearer ')) {
@@ -13,7 +12,7 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
     }
 
     const token = bearer.split(' ')[1];
-    const ok = await UserProfileService.isTokenValid(token);
+    const ok = await AuthService.instance.isTokenValid(token);
 
     if (!ok) {
       return next(new AppError('Unauthorized', 401));
