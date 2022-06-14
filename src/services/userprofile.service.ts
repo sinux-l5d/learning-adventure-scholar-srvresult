@@ -1,6 +1,4 @@
 import config from '@config';
-import { AppError } from '@helpers/AppError.helper';
-import { envDependent } from '@helpers/env.helper';
 import axios from 'axios';
 
 export class UserProfileService {
