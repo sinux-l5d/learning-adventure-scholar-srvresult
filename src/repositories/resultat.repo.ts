@@ -48,7 +48,16 @@ export const getIdExoFromExoUsrSes = async (
     return id['id'];
   }
 
-  throw new AppError(envDependent('', 'getIdExoFromExoUsrSes: ') + "L'exercice n'existe pas", 404);
+  throw new AppError(
+    envDependent('', 'getIdExoFromExoUsrSes: ') +
+      "L'exercice " +
+      idExo +
+      " n'existe pas pour l'étudiant: " +
+      idEtu +
+      ' et la session ' +
+      idSes,
+    404,
+  );
 };
 
 /**
