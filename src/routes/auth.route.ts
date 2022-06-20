@@ -1,3 +1,4 @@
+import config from '@config';
 import { AuthService } from '@services/auth.service';
 import { RequestHandler, Router } from 'express';
 
@@ -12,10 +13,20 @@ const handleAuthorizationCallback: RequestHandler = (req, res, next) => {
   AuthService.instance
     .getToken(req.originalUrl)
     .then((resp) => {
-      res.status(200).json({
-        accessToken: resp.accessToken,
-        refreshToken: resp.refreshToken,
-      });
+      res
+        .status(302)
+        .location(
+          config.FRONT_HOST! +
+            '/oauth/userprofile' +
+            '?access_token=' +
+            resp.accessToken +
+            '&refresh_token=' +
+            resp.refreshToken,
+        )
+        .json({
+          accessToken: resp.accessToken,
+          refreshToken: resp.refreshToken,
+        });
     })
     .catch(next);
 };
