@@ -1,6 +1,8 @@
 import { MySocket, MySocketServer } from '@type/sockets';
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { AideARenvoyer } from '@type/AideARenvoyer';
+import config from '@config';
+import { AuthService } from './auth.service';
 import { TentativePourSocket } from '@type/TentativePourSocket';
 
 /* La classe SocketService est un singleton qui est initialisé avec un serveur de socket. */
@@ -17,6 +19,20 @@ export class SocketService {
    * @param io L'instance du serveur socket.io.
    */
   private constructor(private io: MySocketServer) {
+    io.use(async (socket, next) => {
+      if (config.APP_USERPROFILE_ENABLED === 'true') {
+        const token = socket.handshake.auth.token;
+        const isTokenValid = await AuthService.instance.isTokenValid(token);
+        if (!isTokenValid) {
+          console.error(
+            `L'utilisateur suivant a fourni un token invalide : token="${token}" id=${socket.id} ip=${socket.handshake.address}`,
+          );
+          return next(new Error('Unauthorized'));
+        }
+      }
+      next();
+    });
+
     io.on('connection', (socket: MySocket) => {
       // Affiche qui s'est connecté avec son id et son ip
       console.log(
@@ -42,12 +58,14 @@ export class SocketService {
   }
 
   /**
-   * Retourne l'instance de la classe SocketService. S'il n'existe pas, renvoie une erreur.
+   * Retourne l'instance de la classe SocketService. Si l'instance n'est pas initialisé, renvoie une erreur.
    * @returns Une instance singleton de la classe SocketService.
    * @throws {Error} Si la classe SocketService n'a pas été initialisée.
    */
   public static getInstance() {
-    if (!SocketService.instance) throw new Error('SocketService not initialized');
+    if (!SocketService.instance) {
+      throw new Error('SocketService not initialized');
+    }
     return SocketService.instance;
   }
 
@@ -57,8 +75,6 @@ export class SocketService {
    * @throws {Error} Si la classe SocketService n'a pas été initialisée.
    */
   public async emitExercice(exercice: ExerciceEtudiant) {
-    if (!SocketService.instance) throw new Error('SocketService not initialized');
-
     this.io.emit('exercices', { etudiantCommenceExo: exercice });
 
     console.log('Exercice envoyé à ' + (await this.getNbClients()) + ' clients');
@@ -70,7 +86,9 @@ export class SocketService {
    * @throws {Error} Si la classe SocketService n'a pas été initialisée.
    */
   public async emitTentative(tentative: TentativePourSocket) {
-    if (!SocketService.instance) throw new Error('SocketService not initialized');
+    if (!SocketService.instance) {
+      throw new Error('SocketService not initialized');
+    }
 
     this.io.emit('tentatives', { etudiantFaitNouvelleTentative: tentative });
 
@@ -83,8 +101,6 @@ export class SocketService {
    * @throws {Error} Si la classe SocketService n'a pas été initialisée.
    */
   public async emitAide(aideARenvoyer: AideARenvoyer) {
-    if (!SocketService.instance) throw new Error('SocketService not initialized');
-
     this.io.emit('aides', { etudiantDemandeAide: aideARenvoyer });
 
     console.log('aide envoyé à ' + (await this.getNbClients()) + ' clients');
@@ -96,8 +112,6 @@ export class SocketService {
    * @throws {Error} Si la classe SocketService n'a pas été initialisée.
    */
   public async getNbClients() {
-    if (!SocketService.instance) throw new Error('SocketService not initialized');
-
     return (await this.io.sockets.allSockets()).size;
   }
 }
