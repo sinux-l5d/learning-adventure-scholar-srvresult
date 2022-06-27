@@ -1,6 +1,6 @@
-import config from "@config";
-import { AuthService } from "@services/auth.service";
-import { RequestHandler, Router } from "express";
+import config from '@config';
+import { AuthService } from '@services/auth.service';
+import { RequestHandler, Router } from 'express';
 
 const authRouter = Router();
 
@@ -17,9 +17,9 @@ const handleAuthorizationCallback: RequestHandler = (req, res, next) => {
         .status(302)
         .location(
           config.FRONT_OAUTH_CALLBACK +
-            "?access_token=" +
+            '?access_token=' +
             resp.accessToken +
-            "&refresh_token=" +
+            '&refresh_token=' +
             resp.refreshToken,
         )
         .json({
@@ -30,7 +30,7 @@ const handleAuthorizationCallback: RequestHandler = (req, res, next) => {
     .catch(next);
 };
 
-authRouter.get("/", redirectToLogin);
-authRouter.get("/userprofile", handleAuthorizationCallback);
+authRouter.get('/', redirectToLogin);
+authRouter.get('/userprofile', handleAuthorizationCallback);
 
 export default authRouter;
