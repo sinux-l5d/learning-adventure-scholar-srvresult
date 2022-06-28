@@ -136,6 +136,7 @@ export const addNewAide = async (
       idExo: exoEtu.idExo,
       idSession: exoEtu.idSession,
       idSeance: exoEtu.idSeance,
+      idExoEtu: idExoDBResult,
       resolue: last_aide.resolue,
       date: last_aide.date,
     };
@@ -163,6 +164,7 @@ export const resolveAides = async (
           idExo: exoEtuAvant.idExo,
           idSession: exoEtuAvant.idSession,
           idSeance: exoEtuAvant.idSeance,
+          idExoEtu: idExoDBResult,
           resolue: true,
           date: aide.date,
         });

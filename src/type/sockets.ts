@@ -1,7 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { ExerciceEtudiant } from './ExerciceEtudiant';
 import { Tentative } from './Tentative';
-import { Aide } from './Aide';
 import { AideARenvoyer } from './AideARenvoyer';
 
 /**
