@@ -1,6 +1,5 @@
 import { ExerciceEtudiant } from '@type/ExerciceEtudiant';
 import { Aide } from '@type/Aide';
-import { TentativeDepuisEval } from '@type/TentativeDepuisEval';
 import { SocketService } from './socket.service';
 import * as repo from '@repositories/resultat.repo';
 import { ExerciceService } from './exercice.service';
@@ -53,14 +52,18 @@ export class AideService {
       (a: Aide) => getAFckComparableDate(a.date) === getAFckComparableDate(new Date()),
     );
 
-    if (aideDupliques.length > 0)
+    if (aideDupliques.length > 0) {
       throw new AppError(envDependent('', 'addNewTentative: ') + 'La tentative existe déjà', 400);
+    }
 
     // On crée la demande d'aide dans un format compatible avec la bdd résultat
     const aideForDB = this.createAideForDB();
 
     const aideDB = await repo.addNewAide(aideForDB, idExoDBResult);
-    SocketService.getInstance().emitAide(aideDB);
+    SocketService.getInstance().emitAide({
+      ...aideDB,
+      idExoEtu: idExoDBResult,
+    });
     return aideDB;
   }
 

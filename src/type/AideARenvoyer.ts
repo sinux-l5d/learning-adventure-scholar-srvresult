@@ -13,4 +13,5 @@ export type AideARenvoyer = Aide & {
   idEtu: string;
   idSession: string;
   idSeance: string;
+  idExoEtu: string;
 };
