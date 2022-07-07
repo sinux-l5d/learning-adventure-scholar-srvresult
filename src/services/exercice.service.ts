@@ -67,6 +67,8 @@ export class ExerciceService {
       difficulte: resDepuisExercice['difficulte'],
       tempsMoyen: resDepuisExercice['tempsMoyen'],
       tempsMaximum: resDepuisExercice['tempsMaximum'],
+      enonce: resDepuisExercice['enonce'],
+      auteurs: resDepuisExercice['auteurs'],
       debut: new Date(),
       tentatives: [],
       aides: [],
