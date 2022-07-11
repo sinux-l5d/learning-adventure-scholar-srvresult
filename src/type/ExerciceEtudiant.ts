@@ -19,4 +19,6 @@ export type ExerciceEtudiant = {
   debut: Date;
   tentatives: Array<Tentative>;
   aides: Array<Aide>;
+  enonce: string;
+  auteurs: Array<string>;
 };
