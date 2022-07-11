@@ -52,3 +52,13 @@ const port: number = Number(config.APP_PORT_EXT) || 3001;
 httpServer.listen(port, () => {
   console.log('Server is running on port ' + port + ' in ' + config.NODE_ENV + ' mode.');
 });
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received.');
+  httpServer.close(() => {
+    console.log('Server closed.');
+  });
+  mongoose.connection.close(() => {
+    console.log('Mongoose connection closed.');
+  });
+});
