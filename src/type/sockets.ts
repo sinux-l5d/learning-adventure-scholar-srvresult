@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import { ExerciceEtudiant } from './ExerciceEtudiant';
 import { Tentative } from './Tentative';
-import { Aide } from './Aide';
+import { AideARenvoyer } from './AideARenvoyer';
 
 /**
  * Message envoyé par le serveur pour signaler l'ajout d'un exercice
@@ -16,7 +16,7 @@ export type MessageTentative = { etudiantFaitNouvelleTentative: Tentative };
 /**
  * Message envoyé par le serveur pour signaler la nouvelle demande d'aide
  */
-export type MessageAide = { etudiantDemandeAide: Aide };
+export type MessageAide = { etudiantDemandeAide: AideARenvoyer };
 
 /**
  * Évenements envoyés par le serveur

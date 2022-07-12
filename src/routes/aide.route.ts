@@ -37,15 +37,14 @@ const ajouteNouvelleAide: RequestHandler = async (req, res, next) => {
   // TODO : utiliser la séance
   const idSeance = aide['idSeance'];
 
-  const idExoDBResult: ExerciceEtudiant['id'] = await ExerciceService.getIdExoFromExoUsrSes(
-    idExo,
-    idEtu,
-    idSes,
-  );
-  AideService.addNewAide(idExoDBResult)
-    .then((aideAdded) => {
-      // L'aide a bien été ajouté a la bdd
-      res.status(200).json({ aide: aideAdded });
+  ExerciceService.getIdExoFromExoUsrSes(idExo, idEtu, idSes)
+    .then((idExoDBResult) => {
+      AideService.addNewAide(idExoDBResult)
+        .then((aideAdded) => {
+          // L'aide a bien été ajouté a la bdd
+          res.status(200).json({ aide: aideAdded });
+        })
+        .catch(next);
     })
     .catch(next);
 };

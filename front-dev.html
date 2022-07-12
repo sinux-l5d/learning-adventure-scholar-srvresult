@@ -7,9 +7,17 @@
     <title>Front de developpement</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socket = io();
+      const socket = io({
+        auth: {
+          token: 'INSERT HERE',
+        },
+      });
       socket.on('exercices', console.log);
       socket.on('tentatives', console.log);
+      socket.on('connect_error', console.log);
+      socket.on('connect', () => {
+        console.log('Connecté !');
+      });
       console.log('Vous verrez ici les exercices et les tentatives');
     </script>
   </head>

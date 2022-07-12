@@ -72,7 +72,7 @@ export class TentativeService {
     const tentativeForDB = this.convertTentativeForDB(tentative);
 
     const tentativeDB = await repo.addNewTentative(tentativeForDB, idExoDBResult);
-    SocketService.getInstance().emitTentative(tentativeDB);
+    SocketService.getInstance().emitTentative({ ...tentativeDB, idExoEtu: idExoDBResult });
     return tentativeDB;
   }
 }

@@ -48,7 +48,16 @@ export const getIdExoFromExoUsrSes = async (
     return id['id'];
   }
 
-  throw new AppError(envDependent('', 'getIdExoFromExoUsrSes: ') + "L'exercice n'existe pas", 404);
+  throw new AppError(
+    envDependent('', 'getIdExoFromExoUsrSes: ') +
+      "L'exercice " +
+      idExo +
+      " n'existe pas pour l'étudiant: " +
+      idEtu +
+      ' et la session ' +
+      idSes,
+    404,
+  );
 };
 
 /**
@@ -127,6 +136,7 @@ export const addNewAide = async (
       idExo: exoEtu.idExo,
       idSession: exoEtu.idSession,
       idSeance: exoEtu.idSeance,
+      idExoEtu: idExoDBResult,
       resolue: last_aide.resolue,
       date: last_aide.date,
     };
@@ -154,6 +164,7 @@ export const resolveAides = async (
           idExo: exoEtuAvant.idExo,
           idSession: exoEtuAvant.idSession,
           idSeance: exoEtuAvant.idSeance,
+          idExoEtu: idExoDBResult,
           resolue: true,
           date: aide.date,
         });

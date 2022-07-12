@@ -28,10 +28,6 @@ const TentativeSchema = new Schema<Tentative>({
 });
 
 const AideSchema = new Schema<Aide>({
-  id: {
-    type: String,
-    required: true,
-  },
   date: {
     type: Date,
     default: Date.now,
@@ -108,7 +104,7 @@ const ExerciceEtudiantSchema = new Schema<TExerciceEtudiant>({
 });
 
 // Enlève les propriétés non voulu lorsque l'on transforme en JSON
-[TentativeSchema, ExerciceEtudiantSchema].forEach((schema) => {
+[TentativeSchema, ExerciceEtudiantSchema, AideSchema].forEach((schema) => {
   schema.set('toJSON', {
     // pour avoir `id`, alias natif de `_id`. virtual = alias
     virtuals: true,
